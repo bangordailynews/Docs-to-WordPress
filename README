@@ -1,0 +1,12 @@
+Usage:
+
+$docs_to_wp = new Docs_To_WP();
+$gdClient = $docs_to_wp->docs_to_wp_init( 'example@gmail.com', 'password' );
+//We're just going to call one function:
+$docs_to_wp->retrieve_docs_for_web( $gdClient, Source folder ID, Destination folder ID );
+
+
+You can add this to a wp-cron job or do what I did and include the WordPress bootstrap (include('./wp-load.php');) in a php file with the code above and set up an actual cron job.
+
+TK:
+Other things
