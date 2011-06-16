@@ -11,6 +11,8 @@ Easily move posts from Google Docs to WordPress
 == Description ==
 This plugin will grab docs out of a collection in Google Docs, create or update a post in WordPress and then move the doc to a new collection. Google Docs no longer supports xmlrpc, so this is perhaps the easiest way to move content from your Google Docs account to your self-hosted WordPress install.
 
+You can see more details at http://dev.bangordailynews.com/2011/06/16/marrying-google-docs-and-wordpress-or-really-any-cms/
+
 == Installation ==
 
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
@@ -26,17 +28,5 @@ $docs_to_wp->retrieve_docs_for_web( $gdClient, Source folder ID, Destination fol
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
+= 0.1-beta =
+Initial release
