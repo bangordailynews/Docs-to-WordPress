@@ -3,7 +3,7 @@
 Plugin Name: Docs to WP
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.1-beta
+Version: 0.2-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -76,7 +76,7 @@ class Docs_To_WP {
 			$docID = $entry[ 'id' ];
 			$title = (string) $entry[ 'name' ];
 			$source = (string) $entry[ 'down' ];
-			$content = $this->get_clean_doc( $purifier, $source );			
+			$content = $this->get_clean_doc( $gdClient, $purifier, $source );			
 			$post_id = $this->publish_to_WordPress( $title, $content, $author, $cats, array( '_gdocID' => $docID ) );
 			$posts[] = array( 'post_id' => $post_id, 'gdoc_id' => $docID );
 		}
@@ -85,8 +85,7 @@ class Docs_To_WP {
 	}
 	
 	
-	public function get_clean_doc( $purifier, $uri ) {
-		global $gdClient;
+	public function get_clean_doc( $gdClient, $purifier, $uri ) {
 		
 		//We want to clean up each doc a bit
 		$contents = $gdClient->getFile( $uri, false, "html");
