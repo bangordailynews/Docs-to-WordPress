@@ -1,6 +1,9 @@
 <?php
 /*
 Plugin Name: Docs to WordPress extender - Run on Cron (every minute)
+Author: William P. Davis, Bangor Daily News
+Author URI: http://wpdavis.com/
+Version: 0.2-beta
 */
 
 register_activation_hook( __FILE__, 'dtwp_schedule_event' );

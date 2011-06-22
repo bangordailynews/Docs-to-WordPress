@@ -1,6 +1,9 @@
 <?php
 /*
 Plugin Name: Docs to WordPress extender - clean content, strip comments
+Author: William P. Davis, Bangor Daily News
+Author URI: http://wpdavis.com/
+Version: 0.2-beta
 */
 
 	
