@@ -53,7 +53,7 @@ function dtwp_clean_content($post_content) {
 		
 		$post_content = str_replace( '<div>','<p>',$post_content );
 		$post_content = str_replace( '</div>', '</p>',$post_content );
-		$post_content = strip_tags($post_content, '<strong><b><i><em><a><u><br><p><ol><ul><li>' );
+		$post_content = strip_tags($post_content, '<strong><b><i><em><a><u><br><p><ol><ul><li><h1><h2><h3><h4><h5><h6>' );
 		$post_content = str_replace( '--','&mdash;',$post_content );
 		$post_content = str_replace( '<br><br>','<p>',$post_content );
 		$post_content = str_replace( '<br>&nbsp;&nbsp;&nbsp;', '\n\n', $post_content );
