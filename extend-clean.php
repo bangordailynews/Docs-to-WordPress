@@ -3,10 +3,28 @@
 Plugin Name: Docs to WordPress extender - clean content, strip comments
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.2-beta
+Version: 0.3-beta
 */
 
-	
+
+add_filter( 'pre_docs_to_wp_strip', 'dtwp_extract_styles', 10, 1 );
+function dtwp_extract_styles( $content ) {
+
+		preg_match('#.c(?P<digit>\d+){font-weight:bold}#', $contents[ 'contents' ], $boldmatches);
+		preg_match('#.c(?P<digit>\d+){font-style:italic}#', $contents[ 'contents' ], $italicmatches);
+		
+		
+		if( isset( $boldmatches[ 'digit' ] ) )
+			$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $boldmatches[ 'digit' ] . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $boldmatches[ 'digit' ] . '$2"><strong>$3</strong></span>', $contents[ 'contents' ] );
+		
+		if( isset( $italicmatches[ 'digit' ] ) )
+			$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $italicmatches[ 'digit' ] . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $italicmatches[ 'digit' ] . '$2"><em>$3</em>', $contents[ 'contents' ] );
+
+
+		return $contents[ 'contents' ];
+
+}
+
 
 add_filter( 'pre_docs_to_wp_insert', 'dtwp_clean_content_filter', 10, 1 );
 function dtwp_clean_content_filter( $post_array ) {	

@@ -3,7 +3,7 @@
 Plugin Name: Docs to WP
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.2-beta
+Version: 0.3-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -90,6 +90,7 @@ class Docs_To_WP {
 		//We want to clean up each doc a bit
 		$contents = $gdClient->getFile( $uri, false, "html");
 		
+		$contents = apply_filters( 'pre_docs_to_wp_strip', $contents );
 		
 		//New domDocument and xPath to get the content
 		$dom= new DOMDocument();
