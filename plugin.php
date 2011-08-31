@@ -115,8 +115,8 @@ class Docs_To_WP {
 	//Checks if there is an earlier version of the article
 	public function post_exists_by_meta( $key, $value ) {
 		global $wpdb;
-		$query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '" . $key . "' AND meta_value = '" . $value . "'";
-		return $wpdb->get_var( $wpdb->prepare($query) );
+		$query = "SELECT post_id FROM " . $wpdb->postmeta . " WHERE meta_key = %s AND meta_value = %s";
+		return $wpdb->get_var( $wpdb->prepare( $query, $key, $value ) );
 	}
 	
 	public function publish_to_WordPress ( $title, $content, $author = false, $categories = false, $custom_fields = false ) {

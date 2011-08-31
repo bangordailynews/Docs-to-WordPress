@@ -8,7 +8,7 @@ Version: 0.3-beta
 
 
 add_filter( 'pre_docs_to_wp_strip', 'dtwp_extract_styles', 10, 1 );
-function dtwp_extract_styles( $content ) {
+function dtwp_extract_styles( $contents ) {
 
 		preg_match('#.c(?P<digit>\d+){font-weight:bold}#', $contents[ 'contents' ], $boldmatches);
 		preg_match('#.c(?P<digit>\d+){font-style:italic}#', $contents[ 'contents' ], $italicmatches);
@@ -21,7 +21,7 @@ function dtwp_extract_styles( $content ) {
 			$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $italicmatches[ 'digit' ] . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $italicmatches[ 'digit' ] . '$2"><em>$3</em>', $contents[ 'contents' ] );
 
 
-		return $contents[ 'contents' ];
+		return $contents;
 
 }
 
@@ -53,7 +53,7 @@ function dtwp_clean_content($post_content) {
 		
 		$post_content = str_replace( '<div>','<p>',$post_content );
 		$post_content = str_replace( '</div>', '</p>',$post_content );
-		$post_content = strip_tags($post_content, '<strong><b><i><em><a><u><br><p><ol><ul><li><h1><h2><h3><h4><h5><h6>' );
+		$post_content = strip_tags($post_content, '<b><i><em><a><u><br><p><ol><ul><li><h1><h2><h3><h4><h5><h6>' );
 		$post_content = str_replace( '--','&mdash;',$post_content );
 		$post_content = str_replace( '<br><br>','<p>',$post_content );
 		$post_content = str_replace( '<br>&nbsp;&nbsp;&nbsp;', '\n\n', $post_content );
