@@ -4,7 +4,7 @@ Donate link: http://wpdavis.com/
 Tags: docs,google,google docs,syndication
 Requires at least: 3.0
 Tested up to: 3.2
-Stable tag: 0.3-beta
+Stable tag: 0.4-beta
 
 Easily move posts from Google Docs to WordPress
 
@@ -39,6 +39,9 @@ You will need to have a folder to draw the docs from and an optional folder to p
 In docs, the ID looks a little something like this in the URL: #folders/folder.0.!--ID STARTS HERE, after the 0 and the period --!
 
 == Changelog ==
+
+= 0.4-beta =
+Use HTTPS instead of HTTP, per new Google API spec.
 
 = 0.3-beta =
 In extend-clean.php, extract the styles and apply them so bolding and italicizing goes through. Also, don't strip heading styles. Props nacin and  Rob Flaherty.
