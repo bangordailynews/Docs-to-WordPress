@@ -43,6 +43,8 @@ In docs, the ID looks a little something like this in the URL: #folders/folder.0
 = 0.4-beta =
 Use HTTPS instead of HTTP, per new Google API spec.
 
+Fix a few bugs with carrying over bold and italic
+
 = 0.3-beta =
 In extend-clean.php, extract the styles and apply them so bolding and italicizing goes through. Also, don't strip heading styles. Props nacin and  Rob Flaherty.
 
