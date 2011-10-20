@@ -10,17 +10,25 @@ Version: 0.4-beta
 add_filter( 'pre_docs_to_wp_strip', 'dtwp_extract_styles', 10, 1 );
 function dtwp_extract_styles( $contents ) {
 
-		preg_match('#.c(?P<digit>\d+){font-weight:bold}#', $contents[ 'contents' ], $boldmatches);
-		preg_match('#.c(?P<digit>\d+){font-style:italic}#', $contents[ 'contents' ], $italicmatches);
+		preg_match_all( '#.c(?P<digit>\d+){(.*?)font-weight:bold(.*?)}#', $contents[ 'contents' ], $boldmatches );
+		preg_match_all('#.c(?P<digit>\d+){(.*?)font-style:italic(.*?)}#', $contents[ 'contents' ], $italicmatches);
+				
+		if( !empty( $boldmatches[ 'digit' ] ) ) {
 		
+			foreach( $boldmatches[ 'digit' ] as $boldclass ) {
+				$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $boldclass . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $boldclass . '$2"><strong>$3</strong></span>', $contents[ 'contents' ] );
+			}
 		
-		if( isset( $boldmatches[ 'digit' ] ) )
-			$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $boldmatches[ 'digit' ] . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $boldmatches[ 'digit' ] . '$2"><strong>$3</strong></span>', $contents[ 'contents' ] );
+		}
 		
-		if( isset( $italicmatches[ 'digit' ] ) )
-			$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $italicmatches[ 'digit' ] . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $italicmatches[ 'digit' ] . '$2"><em>$3</em>', $contents[ 'contents' ] );
-
-
+		if( !empty( $italicmatches[ 'digit' ] ) ) {
+		
+			foreach( $italicmatches[ 'digit' ] as $italicclass ) {
+				$contents[ 'contents' ] = preg_replace( '#<span class="(.*?)c' . $italicclass . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $italicclass . '$2"><em>$3</em>', $contents[ 'contents' ] );
+			}
+		
+		}
+		
 		return $contents;
 
 }
