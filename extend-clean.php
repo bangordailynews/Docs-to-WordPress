@@ -10,9 +10,13 @@ Version: 0.4-beta
 add_filter( 'pre_docs_to_wp_strip', 'dtwp_extract_styles', 10, 1 );
 function dtwp_extract_styles( $contents ) {
 
+		//PHP doesn't honor lazy matches very well, apparently, so add newlines
+		$contents[ 'contents' ] = str_replace( '}', "}\r\n", $contents[ 'contents' ] );
+
+
 		preg_match_all( '#.c(?P<digit>\d+){(.*?)font-weight:bold(.*?)}#', $contents[ 'contents' ], $boldmatches );
 		preg_match_all('#.c(?P<digit>\d+){(.*?)font-style:italic(.*?)}#', $contents[ 'contents' ], $italicmatches);
-				
+		
 		if( !empty( $boldmatches[ 'digit' ] ) ) {
 		
 			foreach( $boldmatches[ 'digit' ] as $boldclass ) {

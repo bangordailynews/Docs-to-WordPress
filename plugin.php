@@ -293,15 +293,13 @@ class gData
 	 	// Include the Auth string in the headers
 		// Together with the API version being used
 		$headers = array(
-			"Authorization: GoogleLogin auth=" . $this->auth,
-			"GData-Version: 3.0",
-			"Content-Type: application/atom+xml");
-		if($idFolder)
-		{
+			'Authorization' => 'GoogleLogin auth=' . $this->auth,
+			'GData-Version' => '3.0',
+			'Content-Type' => 'application/atom+xml'
+		);
+		if( $idFolder ) {
 			$url = "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
-		}
-		else
-		{
+		} else {
 			$url = "https://docs.google.com/feeds/default/private/full";
 		}	
 		
