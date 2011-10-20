@@ -4,7 +4,7 @@ Donate link: http://wpdavis.com/
 Tags: docs,google,google docs,syndication
 Requires at least: 3.0
 Tested up to: 3.2
-Stable tag: 0.3-beta
+Stable tag: 0.4-beta
 
 Easily move posts from Google Docs to WordPress
 

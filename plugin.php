@@ -3,7 +3,7 @@
 Plugin Name: Docs to WP
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.3-beta
+Version: 0.4-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -298,11 +298,11 @@ class gData
 			"Content-Type: application/atom+xml");
 		if($idFolder)
 		{
-			$url = "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
+			$url = "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
 		}
 		else
 		{
-			$url = "http://docs.google.com/feeds/default/private/full";
+			$url = "https://docs.google.com/feeds/default/private/full";
 		}	
 		
 		$xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
@@ -361,7 +361,7 @@ class gData
 			"GData-Version: 3.0",
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full";
+		$url = "https://docs.google.com/feeds/default/private/full";
 		if( $idFolder )
 			$url .= "/folder%3A" . $idFolder . "/contents";
 		// Make the request
@@ -422,7 +422,7 @@ class gData
 			"GData-Version: 3.0",
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full/-/folder";
+		$url = "https://docs.google.com/feeds/default/private/full/-/folder";
 		
 		// Make the request
 		curl_setopt($this->curl, CURLOPT_URL, $url);
@@ -488,11 +488,11 @@ class gData
 		
 			if($idFolder)
 			{
-				$url = "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
+				$url = "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
 			}
 			else
 			{
-				$url = "http://docs.google.com/feeds/default/private/full";
+				$url = "https://docs.google.com/feeds/default/private/full";
 			}		
 		
 			// Make the request
@@ -597,7 +597,7 @@ class gData
 			"Authorization: GoogleLogin auth=" . $this->auth,
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full/";
+		$url = "https://docs.google.com/feeds/default/private/full/";
 		if( $idFolder ) {
 			$url .= "folder%3A" . $idFolder . "/contents/document%3A" . $idFile;
 		} else {
@@ -657,7 +657,7 @@ class gData
 		}
 		
 		// Make the request
-		curl_setopt($this->curl, CURLOPT_URL, "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents");
+		curl_setopt($this->curl, CURLOPT_URL, "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents");
 		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($this->curl, CURLOPT_POST, true);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $xmlstr);
