@@ -7,6 +7,73 @@ Version: 0.4-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+//MF
+add_action('admin_menu', 'gdocs_admin_add_page');
+
+function gdocs_admin_add_page() {
+	add_posts_page('Docs to Wordpress', 'Docs to Wordpress', 'edit_posts', 'gdocs-admin', 'gdocs_admin');
+}
+
+function gdocs_admin() {
+	//Init the Docs to WP
+	$docs_to_wp = new Docs_To_WP();
+	
+	//Set these variables in your wp-config
+	$gdClient = $docs_to_wp->docs_to_wp_init( DOCSTOWP_USER, DOCSTOWP_PASS );
+	?>
+
+	<h2>Fetching documents from Google Docs</h2>
+
+	<?php	
+	//We're just going to call one function:
+	$docs_to_wp->retrieve_docs_for_web( $gdClient, DOCSTOWP_ORIGIN, DOCSTOWP_DESTINATION);
+}
+
+function open_output_to_page($title, $contents, $error) {
+  ?>
+
+}
+
+function close_output_to_page() {
+  ?>
+        </div>
+    </div>
+  <?php
+}
+
+function gdocs_log($content, $type = "log") {
+  global $output;
+  $output[] = array($type, $content);
+}
+
+function echo_gdocs_log($title) {
+  global $output;
+  $errors = "";
+  $action = "";
+  foreach ($output as $item) {
+    if($item[0]=="error") {
+      $errors = $errors.$item[1];
+    } elseif ($item[0]=="action") {
+      $action = $item[1];
+    }
+  }
+  ?>
+  <div id="linksubmitdiv" class="postbox closed" style="width:90%;">
+    <div class="handlediv" title="Click to show"><br></div>
+    <h3 class="handle"<?php echo strlen($errors)>0?' style="color:red;"':''; ?>><span><?php
+      echo $action.$title;
+      echo strlen($errors)>0?"Errors: ".$errors:"";
+      ?></span></h3>
+    <div class="inside"><?php
+    foreach ($output as $item) {
+      echo $item[1]."\n";
+    }
+    ?>
+    </div>
+  </div>
+  <?php
+  $output = array(); //empty for next log round
+}
 
 class Docs_To_WP { 
 	public function docs_to_wp_init( $username, $password ) {
@@ -24,7 +91,12 @@ class Docs_To_WP {
 		//Include and set up the HTML purifier
 		include( $plugin_path . 'purifier/HTMLPurifier.standalone.php' );
 		$config = HTMLPurifier_Config::createDefault();
-		$purifier = new HTMLPurifier();
+        /* Uncomment if having problems with empty lines
+		$config->set('AutoFormat.RemoveEmpty', 'true');
+		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', 'true');
+		$config->set('HTML.DefinitionRev', 1);
+        */
+        $purifier = new HTMLPurifier($config);
 		return $purifier;
 	
 	}
@@ -79,6 +151,8 @@ class Docs_To_WP {
 			$content = $this->get_clean_doc( $gdClient, $purifier, $source );			
 			$post_id = $this->publish_to_WordPress( $title, $content, $author, $cats, array( '_gdocID' => $docID ) );
 			$posts[] = array( 'post_id' => $post_id, 'gdoc_id' => $docID );
+            
+            echo_gdocs_log($title." to post id ".$post_id);
 		}
 		
 		return $posts;
@@ -151,21 +225,32 @@ class Docs_To_WP {
 				$post_array = array_merge( $post_array, array( 'ID' => $post_id ) );
 			}
 			
-			
 			//If you want all posts to be auto-published, for example, you can add a filter here
 			$post_array = apply_filters( 'pre_docs_to_wp_insert', $post_array );
 			
+            gdocs_log($post_array['post_content']);
+            
 			//Add or update
-			if( empty( $post_id ) ) {
+            if( empty( $post_id ) ) {
+                gdocs_log("Added: ", "action");
 				$post_id = wp_insert_post( $post_array );
+				// We need to insert images here as they require the post id to be set as attachments
+				if(has_filter('attach_images_docs_to_wp_insert')) {
+					$post_array['ID'] = $post_id;
+					$post_array = apply_filters( 'attach_images_docs_to_wp_insert', $post_array); //MF
+					$post_id = wp_update_post( $post_array ); // update again due to changes after we know the post ID
+					gdocs_log("Had to run update on post again to insert images");
+				}
 			} else {
+                gdocs_log("Updated: ", "action");
+				$post_array = apply_filters( 'attach_images_docs_to_wp_insert', $post_array); //MF
 				$post_id = wp_update_post( $post_array );
 			}
 			
 			//Update post meta, including the _gdocID field
 			foreach( $post_array['custom_fields'] as $key => $value )
 				update_post_meta( $post_id, $key, $value );
-				
+			
 			return $post_id;
 			
 	}
