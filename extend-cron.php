@@ -31,9 +31,9 @@ function dtwp_check_gdocs( ) {
 	$docs_to_wp = new Docs_To_WP();
 	
 	//Set these variables in your wp-config
-	$gdClient = $docs_to_wp->docs_to_wp_init( DOCSTOWP_USER, DOCSTOWP_PASS );
+	$docs_to_wp->docs_to_wp_init( DOCSTOWP_USER, DOCSTOWP_PASS );
 	
 	//We're just going to call one function:
-	$docs_to_wp->retrieve_docs_for_web( $gdClient, DOCSTOWP_ORIGIN, DOCSTOWP_DESTINATION );
+	$docs_to_wp->retrieve_docs_for_web( null, DOCSTOWP_ORIGIN, DOCSTOWP_DESTINATION );
 
 }

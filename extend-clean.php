@@ -49,10 +49,9 @@ function dtwp_clean_content_filter( $post_array ) {
 }
 
 
-function dtwp_clean_content($post_content) {
+function dtwp_clean_content( $post_content ) {
 		$post_content = str_replace( array( "\r\n", "\n\n", "\r\r", "\n\r" ), "\n", $post_content );
-		$post_content = preg_replace('/<div(.*?)>/', '<div>', $post_content);
-		$post_content = preg_replace('/<p(.*?)>/', '<p>', $post_content);
+		$post_content = preg_replace( '/ class=".*?"\>/', '>', $post_content );
 		
 		//Match all the comments into an array. We're doing this before anything else because the </div> is importqnt
 		preg_match_all( '/<div><p><a href="#cmnt_ref[\d]">\[[\w]\]<\/a>(.*?)<\/div>/', $post_content, $comments, PREG_PATTERN_ORDER);
@@ -65,13 +64,15 @@ function dtwp_clean_content($post_content) {
 		
 		$post_content = str_replace( '<div>','<p>',$post_content );
 		$post_content = str_replace( '</div>', '</p>',$post_content );
-		$post_content = strip_tags($post_content, '<strong><b><i><em><a><u><br><p><ol><ul><li><h1><h2><h3><h4><h5><h6>' );
-		$post_content = str_replace( '--','&mdash;',$post_content );
-		$post_content = str_replace( '<br><br>','<p>',$post_content );
+		$post_content = strip_tags( $post_content, '<strong><b><i><em><a><u><br><p><ol><ul><li><h1><h2><h3><h4><h5><h6><img>' );
+		$post_content = str_replace( '--','&mdash;', $post_content );
+
+		//These are holdovers from the old version of docs and are probably not relevant anymore, but leaving them in just in case
+		$post_content = str_replace( '<br><br>','<p>', $post_content );
 		$post_content = str_replace( '<br>&nbsp;&nbsp;&nbsp;', '\n\n', $post_content );
-		$post_content = str_replace( '<br>
-&nbsp;&nbsp;&nbsp;','\n\n',$post_content);
+		$post_content = str_replace( "<br>\n&nbsp;&nbsp;&nbsp;",'\n\n',$post_content);
 		$post_content = str_replace( '<br><br>', '\n\n', $post_content );
+		
 		$post_content = trim( $post_content );
 		$pees = explode( '<p>', $post_content );
 		$trimmed = array();
@@ -81,6 +82,7 @@ function dtwp_clean_content($post_content) {
 		$post_content = preg_replace( "/<p><\/p>/", '', $post_content );
 		
 		return array( 'content' => $post_content, 'comments' => $comments );
+		
 }
 
 
