@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Docs to WP (and back)
+Plugin Name: Docs to WP
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.1-beta
+Version: 0.4-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -76,7 +76,7 @@ class Docs_To_WP {
 			$docID = $entry[ 'id' ];
 			$title = (string) $entry[ 'name' ];
 			$source = (string) $entry[ 'down' ];
-			$content = $this->get_clean_doc( $purifier, $source );			
+			$content = $this->get_clean_doc( $gdClient, $purifier, $source );			
 			$post_id = $this->publish_to_WordPress( $title, $content, $author, $cats, array( '_gdocID' => $docID ) );
 			$posts[] = array( 'post_id' => $post_id, 'gdoc_id' => $docID );
 		}
@@ -85,12 +85,12 @@ class Docs_To_WP {
 	}
 	
 	
-	public function get_clean_doc( $purifier, $uri ) {
-		global $gdClient;
+	public function get_clean_doc( $gdClient, $purifier, $uri ) {
 		
 		//We want to clean up each doc a bit
 		$contents = $gdClient->getFile( $uri, false, "html");
 		
+		$contents = apply_filters( 'pre_docs_to_wp_strip', $contents );
 		
 		//New domDocument and xPath to get the content
 		$dom= new DOMDocument();
@@ -115,8 +115,8 @@ class Docs_To_WP {
 	//Checks if there is an earlier version of the article
 	public function post_exists_by_meta( $key, $value ) {
 		global $wpdb;
-		$query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '" . $key . "' AND meta_value = '" . $value . "'";
-		return $wpdb->get_var( $wpdb->prepare($query) );
+		$query = "SELECT post_id FROM " . $wpdb->postmeta . " WHERE meta_key = %s AND meta_value = %s";
+		return $wpdb->get_var( $wpdb->prepare( $query, $key, $value ) );
 	}
 	
 	public function publish_to_WordPress ( $title, $content, $author = false, $categories = false, $custom_fields = false ) {
@@ -298,11 +298,11 @@ class gData
 			"Content-Type: application/atom+xml");
 		if($idFolder)
 		{
-			$url = "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
+			$url = "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
 		}
 		else
 		{
-			$url = "http://docs.google.com/feeds/default/private/full";
+			$url = "https://docs.google.com/feeds/default/private/full";
 		}	
 		
 		$xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
@@ -361,7 +361,7 @@ class gData
 			"GData-Version: 3.0",
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full";
+		$url = "https://docs.google.com/feeds/default/private/full";
 		if( $idFolder )
 			$url .= "/folder%3A" . $idFolder . "/contents";
 		// Make the request
@@ -422,7 +422,7 @@ class gData
 			"GData-Version: 3.0",
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full/-/folder";
+		$url = "https://docs.google.com/feeds/default/private/full/-/folder";
 		
 		// Make the request
 		curl_setopt($this->curl, CURLOPT_URL, $url);
@@ -488,11 +488,11 @@ class gData
 		
 			if($idFolder)
 			{
-				$url = "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
+				$url = "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents";
 			}
 			else
 			{
-				$url = "http://docs.google.com/feeds/default/private/full";
+				$url = "https://docs.google.com/feeds/default/private/full";
 			}		
 		
 			// Make the request
@@ -597,7 +597,7 @@ class gData
 			"Authorization: GoogleLogin auth=" . $this->auth,
 		);
 		
-		$url = "http://docs.google.com/feeds/default/private/full/";
+		$url = "https://docs.google.com/feeds/default/private/full/";
 		if( $idFolder ) {
 			$url .= "folder%3A" . $idFolder . "/contents/document%3A" . $idFile;
 		} else {
@@ -657,7 +657,7 @@ class gData
 		}
 		
 		// Make the request
-		curl_setopt($this->curl, CURLOPT_URL, "http://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents");
+		curl_setopt($this->curl, CURLOPT_URL, "https://docs.google.com/feeds/default/private/full/folder%3A". $idFolder ."/contents");
 		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($this->curl, CURLOPT_POST, true);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $xmlstr);
