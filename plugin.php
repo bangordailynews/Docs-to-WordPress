@@ -3,39 +3,35 @@
 Plugin Name: Docs to WP
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.4-beta
+Version: 0.5-beta
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 
 class Docs_To_WP {
 
-	private $username;
-	private $password;
-	private $auth;
-	private $status = 'not connected';
-	var $source_folder;
-	var $destination_folder;
+	private $purifier;
+	private $fromFolder;
+	private $toFolder;
 
-
-	public function docs_to_wp_init( $username, $password ) {
+	public function Docs_To_WP( $username, $password ) {
 		
+		//add admin page
+		//register wp cron
+		//add admin message
+		
+		//where does this go? once we start 
 		do_action( 'docs_to_wp_init' );
-		
-		$this->auth( $username, $password );
-		
-		return null;
 	
 	}
 
 	
-	public function purifier_init( $plugin_path ) {
+	public function purifierInit( ) {
 	
 		//Include and set up the HTML purifier
-		require( $plugin_path . 'purifier/HTMLPurifier.standalone.php' );
+		require( plugin_dir_path( __FILE__ ) . 'purifier/HTMLPurifier.standalone.php' );
 		$config = HTMLPurifier_Config::createDefault();
-		$purifier = new HTMLPurifier();
-		return $purifier;
+		$this->purifier = new HTMLPurifier();
 	
 	}
 	
@@ -65,6 +61,7 @@ class Docs_To_WP {
 		//Returns an array of post IDs and corresponding Google Docs IDs
 		return $posts;
 	}
+
 	
 	public function put_docs_in_wp( $feed ) {
 		global $plugin_path;
@@ -179,198 +176,6 @@ class Docs_To_WP {
 				
 			return $post_id;
 			
-	}
-
-
-	/**
-	* auth
-	* Set auth to google Docs 
-	* @param $email, $password
-	* @access public
-	* @return void
-	*/
-	 
-	public function auth( $username, $password ) {
-
-		$this->username = $username;
-		$this->password = $password;	
-		
-		// Construct an HTTP POST request using the WordPress API
-		$clientlogin_url = "https://www.google.com/accounts/ClientLogin";
-		$clientlogin_post = array(
-			'body' => array(
-				"accountType" => "HOSTED_OR_GOOGLE",
-				"Email" => $this->username,
-				"Passwd" =>  $this->password,
-				"service" => "writely",
-				"source" => "Gdata",
-				"sslverify" => false
-			)
-		);
-		 
-		// Execute Request
-		$response = wp_remote_post( $clientlogin_url, $clientlogin_post );
-		
-		// Get the Auth string and save it
-		if( preg_match( "/Auth=([a-z0-9_\-]+)/i", $response['body'], $matches ) ) {
-			$this->auth = $matches[1];
-			$this->status = "connected";	
-		} else {
-			preg_match("/Error=([a-z0-9_\-]+)/i", $response['body'], $matches);
-			$this->status = "not connected : ". $matches[1] /*." ". curl_error($this->curl)*/;
-		}
-
-	}	
-	
-	
-	/**
-	* docs_get_files
-	* Gets the files for a user or in a folder
-	* @param $folder_id
-	* @access public
-	* @return array
-	*/
-	
-	public function docs_get_files( $folder_id = NULL ) {
-	
-		// Include the Auth string in the headers
-		// Together with the API version being used
-		$headers = array(
-			'Authorization' => 'GoogleLogin auth=' . $this->auth,
-			'GData-Version' => '3.0'
-		);
-		
-		$url = 'https://docs.google.com/feeds/default/private/full';
-
-		if( $folder_id )
-			$url .= '/folder%3A' . $folder_id . '/contents';
-
-		// Make the request
-		$response = wp_remote_get( $url, array( 'headers' => $headers ) );
-
-		
-		// Parse the response
-		$response = simplexml_load_string( $response[ 'body' ] );
-		
-		// Get files
-		$size = sizeOf($response);
-		for( $i=0; $i<$size; $i++ ) {
-			if( $response->entry[$i]->title ) {
-				$arr[$i]["name"] = $response->entry[$i]->title ;
-				$arr[$i]["type"] = $response->entry[$i]->content["type"];
-				$arr[$i]["down"] = $response->entry[$i]->content["src"];
-				list( $not_needed, $id ) = explode( "?", (string) $response->entry[$i]->content["src"] );
-				$arr[$i]["link"] = $response->entry[$i]->link[2]["href"];
-				$arr[$i]["author"] = $response->entry[$i]->author->name;
-				foreach( $response->entry[$i]->link as $folder ) {
-					$title = (string) $folder["title"];
-					if( !empty( $title ) )
-						$arr[$i]["folders"][] = $title;
-				}
-				$arr[$i]["id"] = str_replace( "id=", "", $id );
-			} 
-		}
-	 	return $arr;
-
-	}
-	
-	
-
-
-
-
-	/**
-	* docs_get_file
-	* Gets the contents of a Google Doc
-	* @param $id, $filename, $format
-	* @access public
-	* @return array
-	*/
-	
-	public function docs_get_file( $link ) {
-
-		// Include the Auth string in the headers
-		// Together with the API version being used
-		$headers = array(
-			'Authorization' => 'GoogleLogin auth=' . $this->auth,
-			'GData-Version' => '3.0'
-		);
-		
-		$url = $link . '&exportFormat=html&format=html';
-		
-		$response = wp_remote_get( $url, array( 'headers' => $headers ) );
-
-		return array( 'contents' => $response[ 'body' ] );
-		
-	}
-	
-	
-	
-	/**
-	 * docs_remove_file
-	 * Removes a file from a folder
-	 * @param $file_id, $folder_id
-	 * @access public
-	 * @return void
-	 */
-	 
-	 public function docs_remove_file( $file_id = false, $folder_id = false ) {
-
-		// Include the Auth string in the headers
-		// Together with the API version being used
-		$headers = array(
-			'GData-Version' => '3.0',
-			'If-Match' => '* ',
-			'Authorization' => 'GoogleLogin auth=' . $this->auth,
-		);
-		
-		$url = 'https://docs.google.com/feeds/default/private/full/folder%3A' . $folder_id . '/contents/document%3A' . $file_id;
-		
-		wp_remote_request( $url,
-			array(
-				'headers' => $headers,
-				'method' => 'DELETE'
-			)
-		);
-
-	}
-	
-	
-	
-	/**
-	 * docs_move_file
-	 * Moves file to a collection
-	 * @param $file_id, $folder_id
-	 * @access public
-	 * @return void
-	 */
-	 
-	 public function docs_move_file( $file_id, $folder_id ) {
-
-		// Include the Auth string in the headers
-		// Together with the API version being used
-		$headers = array(
-			'Authorization' => 'GoogleLogin auth=' . $this->auth,
-			'GData-Version' => '3.0',
-			'Content-Type' => 'application/atom+xml'
-		);
-
-		
-
-		$xmlstr = '<?xml version="1.0" encoding="UTF-8"?>
-			<entry xmlns="http://www.w3.org/2005/Atom">
-				<id>https://docs.google.com/feeds/default/private/full/document%3A'. $file_id .'</id>
-			</entry>';
-
-		
-		// Make the request
-		wp_remote_post( $url,
-			array(
-				'headers' => $headers,
-				'body' => $xmlstr
-			)
-		);
-		
 	}
 	
 }
