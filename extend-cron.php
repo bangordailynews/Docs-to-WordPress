@@ -22,14 +22,13 @@ function dtwp_schedule_event() {
 //Run the cron job
 add_action( 'dtwp_cronjob', 'dtwp_check_gdocs' );
 function dtwp_check_gdocs( ) {
+
 	//Init the Docs to WP
 	$docs_to_wp = new Docs_To_WP();
 	
-	//Set these variables in your wp-config
-	$gdClient = $docs_to_wp->docs_to_wp_init( DOCSTOWP_USER, DOCSTOWP_PASS );
-	
 	//We're just going to call one function:
-	$docs_to_wp->retrieve_docs_for_web( $gdClient, DOCSTOWP_ORIGIN, DOCSTOWP_DESTINATION );
+	$result = $docs_to_wp->startTransfer();
+	do_action( 'docs_to_wp_post_cron_run', $result );
 
 }
 
