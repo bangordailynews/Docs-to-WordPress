@@ -23,14 +23,14 @@ class Docs_To_WP {
 		$this->_drive = wrAPI::create('Google_Drive');
 		$this->_auth = wrAPI::create('Google_Auth');
 
-		$this->_register_hooks();
-
 		/* If you have a hardcoded origin and destination, force that here, and update options page to reflect as much. */
 		if( defined('DOCSTOWP_ORIGIN') ) 
 			update_option('docs_to_wp_origin', DOCSTOWP_ORIGIN);
 		
 		if( defined('DOCSTOWP_DESTINATION') )
 			update_option('docs_to_wp_target', DOCSTOWP_DESTINATION);
+
+		$this->_register_hooks();
 
 		do_action('post_docs_to_wp_construct');
 		
