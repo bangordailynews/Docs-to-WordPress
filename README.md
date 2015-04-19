@@ -1,10 +1,16 @@
 # Docs to WordPress #
 **Contributors:** wpdavis, anubisthejackle
+
 **Donate link:** http://wpdavis.com/
+
 **Tags:** docs,google,google docs,syndication
+
 **Requires at least:** 3.0
+
 **Tested up to:** 4.1.1
+
 **Stable tag:** 1.0-beta
+
 
 Easily move posts from Google Docs to WordPress
 
