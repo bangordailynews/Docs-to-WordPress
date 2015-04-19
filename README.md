@@ -46,8 +46,8 @@ You will need to have a folder to draw the docs from and an optional folder to p
 
 ### 1.0-beta ###
 Update to remove deprecated Google API and use Drive API v2
-
 Updates to code to clean it up, remove extraneous loops.
+Added Options page. Changes to make it easier to use.
 
 ### 0.4-beta ###
 Use HTTPS instead of HTTP, per new Google API spec.
