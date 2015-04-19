@@ -1,16 +1,10 @@
 # Docs to WordPress #
 **Contributors:** wpdavis, anubisthejackle
-  
 **Donate link:** http://wpdavis.com/
-  
 **Tags:** docs,google,google docs,syndication
-  
 **Requires at least:** 3.0
-  
 **Tested up to:** 4.1.1
-  
 **Stable tag:** 1.0-beta
-  
 
 Easily move posts from Google Docs to WordPress
 
@@ -40,7 +34,9 @@ include('./wp-load.php');
 $docs_to_wp = new Docs_To_WP();
 $results = $docs_to_wp->startTransfer();`
 
-You will need to have a folder to draw the docs from and an optional folder to put the docs in after they've been processed. Take the Share link for each folder, and enter it into the settings page for Docs To WP.
+You will need to have a folder to draw the docs from and an optional folder to put the docs in after they've been processed.
+
+First create the folder that you want to store unpublished docs in. This is your "Origin" folder. Next create the folder that you will move converted files to. This is the "Target" folder. If you're using Cron, you're going to want to write stories in a separate folder, and then move them to the Origin folder for publishing, when they're ready.
 
 ## Changelog ##
 
