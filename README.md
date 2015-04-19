@@ -35,10 +35,12 @@ Activate the cron extender.
 ### To run using real cron ###
 Create a file to run cron against, and put the following code in it:
 
-`<?php
+```
+<?php
 include('./wp-load.php');
 $docs_to_wp = new Docs_To_WP();
-$results = $docs_to_wp->startTransfer();`
+$results = $docs_to_wp->startTransfer();
+```
 
 You will need to have a folder to draw the docs from and an optional folder to put the docs in after they've been processed.
 
