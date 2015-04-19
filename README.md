@@ -1,5 +1,5 @@
 # Docs to WordPress #
-**Contributors:** wpdavis
+**Contributors:** wpdavis, anubisthejackle
   
 **Donate link:** http://wpdavis.com/
   
@@ -7,9 +7,9 @@
   
 **Requires at least:** 3.0
   
-**Tested up to:** 3.2
+**Tested up to:** 4.1.1
   
-**Stable tag:** 0.4-beta
+**Stable tag:** 1.0-beta
   
 
 Easily move posts from Google Docs to WordPress
@@ -21,15 +21,16 @@ You can see more details at http://dev.bangordailynews.com/2011/06/16/marrying-g
 
 ## Installation ##
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload `docs-to-wordpress` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. If you wish, activate the extender plugin that removes formatting from Google Docs and removes comments, placing them in a separate meta box
-4. To run the plugin, you will need to either activate the included Cron Extender or put code in a separate file and point a cron job to it.
+3. Create a [Google App](https://console.developers.google.com/project) for your website.
+4. Enter Client ID and Client Secret into settings page.
+5. You should be redirected to a Google login page. Grant full permissions.
+6. If you wish, activate the extender plugin that removes formatting from Google Docs and removes comments, placing them in a separate meta box
+7. To run the plugin, you will need to either activate the included Cron Extender or put code in a separate file and point a cron job to it.
 
 ### To run using WP CRON ###
-Activate the cron extender and define, in your wp-config DOCSTOWP_USER, DOCSTOWP_PASS, DOCSTOWP_ORIGIN and DOCSTOWP_DESTINATION like so:
-`define( 'DOCSTOWP_USER', 'example@gmail.com' );
-define( 'DOCSTOWP_PASS', 'mypassword' );`
+Activate the cron extender.
 
 ### To run using real cron ###
 Create a file to run cron against, and put the following code in it:
@@ -37,14 +38,16 @@ Create a file to run cron against, and put the following code in it:
 `<?php
 include('./wp-load.php');
 $docs_to_wp = new Docs_To_WP();
-$gdClient = $docs_to_wp->docs_to_wp_init( 'example@gmail.com', 'password' );
-$docs_to_wp->retrieve_docs_for_web( $gdClient, Source folder ID, Destination folder ID );`
+$results = $docs_to_wp->startTransfer();`
 
-You will need to have a folder to draw the docs from and an optional folder to put the docs in after they've been processed.
-
-In docs, the ID looks a little something like this in the URL: #folders/folder.0.!--ID STARTS HERE, after the 0 and the period --!
+You will need to have a folder to draw the docs from and an optional folder to put the docs in after they've been processed. Take the Share link for each folder, and enter it into the settings page for Docs To WP.
 
 ## Changelog ##
+
+### 1.0-beta ###
+Update to remove deprecated Google API and use Drive API v2
+
+Updates to code to clean it up, remove extraneous loops.
 
 ### 0.4-beta ###
 Use HTTPS instead of HTTP, per new Google API spec.
