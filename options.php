@@ -77,7 +77,6 @@ class Docs_To_WP_Options {
 			</div>
 			<div id="docs_to_wp_submit_wrapper">
 				<input type="button" id="docs_to_wp_options_submit" name="docs_to_wp_options_submit" value="Save" />
-				<input type="button" id="docs_to_wp_options_check_gdocs" name="docs_to_wp_options_check_gdocs" value="Check GDocs" />
 			</div>
 		<!-- End Docs to WP Options Page -->
 		</div>
