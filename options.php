@@ -17,7 +17,10 @@ class Docs_To_WP_Options {
 
 		$hook = add_options_page( 'Docs To WP', 'Docs To WP', 'manage_options', 'docs_to_wp', array( $this, 'settingsPage' ) );
 		add_action( 'load-' . $hook, array( $this, 'verifyAuth') );
-		add_action( 'admin_enqueue_scripts', function() {
+		add_action( 'admin_enqueue_scripts', function( $hook ) {
+
+			if( strpos( $hook, "docs_to_wp" ) === false )
+				return;
 
 			do_action( 'pre_docs_to_wp_enqueue_scripts' );
 
