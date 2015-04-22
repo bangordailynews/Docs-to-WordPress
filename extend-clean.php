@@ -42,7 +42,6 @@ function dtwp_clean_content_filter( $post_array ) {
 	global $dtwp_comments;
 
 	$post_array['custom_fields'] = array_merge( $post_array['custom_fields'], array( '_gdocs_comments' => $dtwp_comments[ 'comments' ] ) );
-	print_r( $post_array );
 
 	return $post_array;
 
@@ -53,8 +52,6 @@ function dtwp_grab_comments( $post_content ){
 	global $dtwp_comments;
 	$array = dtwp_clean_content( $post_content );
 	$dtwp_comments['comments'] = $array['comments'];
-	print_r( $array );
-	print_r( $dtwp_comments );
 	return $array['content'];
 }
 

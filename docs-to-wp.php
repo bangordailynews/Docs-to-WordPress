@@ -185,9 +185,6 @@ class Docs_To_WP {
 		//If the username in gdocs matches the username in WordPress, it will automatically apply the correct username
 		$author_data = $this->_getWPUser( 'login', $author );
 
-		if( !isset( $author_data->ID ) )
-			return false;
-
 		$author = $author_data->ID;
 		
 		// Array filter removes anything that is False, so if this is not an update, ID will auto-remove itself.
