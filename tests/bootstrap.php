@@ -9,7 +9,7 @@
 
 // Activates this plugin in WordPress so it can be tested.
 $GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( 'plugin-slug/main-plugin-file.php' ),
+	'active_plugins' => array( 'Docs-to-WordPress/docs-to-wp.php' ),
 );
 
 // If the develop repo location is defined (as WP_DEVELOP_DIR), use that
