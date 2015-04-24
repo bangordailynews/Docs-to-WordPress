@@ -29,12 +29,110 @@ env:
 
 matrix:
   include:
-    - php: "5.3"
+    - php: "5.5"
+      env: WP_VERSION=master
+    - php: "5.5"
+      env: WP_VERSION=4.1
+    - php: "5.5"
+      env: WP_VERSION=4.0
+    - php: "5.5"
+      env: WP_VERSION=3.9
+    - php: "5.5"
+      env: WP_VERSION=3.8
+    - php: "5.5"
+      env: WP_VERSION=3.7
+    - php: "5.5"
+      env: WP_VERSION=3.6
+    - php: "5.5"
+      env: WP_VERSION=3.5
+    - php: "5.5"
+      env: WP_VERSION=3.4
+    - php: "5.5"
+      env: WP_VERSION=3.3
+    - php: "5.5"
+      env: WP_VERSION=3.2
+    - php: "5.5"
+      env: WP_VERSION=3.1
+    - php: "5.5"
+      env: WP_VERSION=3.0
+    - php: "5.4"
       env: WP_VERSION=master
     - php: "5.4"
-      env: WP_VERSION=3.8.1
+      env: WP_VERSION=4.1
+    - php: "5.4"
+      env: WP_VERSION=4.0
+    - php: "5.4"
+      env: WP_VERSION=3.9
+    - php: "5.4"
+      env: WP_VERSION=3.8
+    - php: "5.4"
+      env: WP_VERSION=3.7
+    - php: "5.4"
+      env: WP_VERSION=3.6
+    - php: "5.4"
+      env: WP_VERSION=3.5
+    - php: "5.4"
+      env: WP_VERSION=3.4
+    - php: "5.4"
+      env: WP_VERSION=3.3
+    - php: "5.4"
+      env: WP_VERSION=3.2
+    - php: "5.4"
+      env: WP_VERSION=3.1
+    - php: "5.4"
+      env: WP_VERSION=3.0
+    - php: "5.3"
+      env: WP_VERSION=master
+    - php: "5.3"
+      env: WP_VERSION=4.1
+    - php: "5.3"
+      env: WP_VERSION=4.0
+    - php: "5.3"
+      env: WP_VERSION=3.9
+    - php: "5.3"
+      env: WP_VERSION=3.8
+    - php: "5.3"
+      env: WP_VERSION=3.7
+    - php: "5.3"
+      env: WP_VERSION=3.6
+    - php: "5.3"
+      env: WP_VERSION=3.5
+    - php: "5.3"
+      env: WP_VERSION=3.4
+    - php: "5.3"
+      env: WP_VERSION=3.3
+    - php: "5.3"
+      env: WP_VERSION=3.2
+    - php: "5.3"
+      env: WP_VERSION=3.1
+    - php: "5.3"
+      env: WP_VERSION=3.0
     - php: "5.2"
-      env: WP_VERSION=3.8.1
+      env: WP_VERSION=master
+    - php: "5.2"
+      env: WP_VERSION=4.1
+    - php: "5.2"
+      env: WP_VERSION=4.0
+    - php: "5.2"
+      env: WP_VERSION=3.9
+    - php: "5.2"
+      env: WP_VERSION=3.8
+    - php: "5.2"
+      env: WP_VERSION=3.7
+    - php: "5.2"
+      env: WP_VERSION=3.6
+    - php: "5.2"
+      env: WP_VERSION=3.5
+    - php: "5.2"
+      env: WP_VERSION=3.4
+    - php: "5.2"
+      env: WP_VERSION=3.3
+    - php: "5.2"
+      env: WP_VERSION=3.2
+    - php: "5.2"
+      env: WP_VERSION=3.1
+    - php: "5.2"
+      env: WP_VERSION=3.0
 
 # Clones WordPress and configures our testing environment.
 before_script:
