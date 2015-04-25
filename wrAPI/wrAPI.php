@@ -21,6 +21,12 @@ function wrAPI_autoload( $class ) {
 
 spl_autoload_register('wrAPI_autoload');
 
+function wrAPI_array_map( $a ){
+
+	return preg_replace( '/[^a-zA-Z0-9]/', null, $a );
+
+}
+
 class wrAPI {
 	
 	/** LOCK OUT INSTANTIATION **/
@@ -30,9 +36,7 @@ class wrAPI {
 
 		$name = explode( '_', $api_name );
 
-		$name = array_map( function($a) {
-			return preg_replace( '/[^a-zA-Z0-9]/', null, $a );
-		}, $name);
+		$name = array_map( 'wrAPI_array_map', $name);
 
 		if( count( $name ) > 1 ){
 			$filename = implode('/', $name);
