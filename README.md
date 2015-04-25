@@ -1,4 +1,6 @@
 # Docs to WordPress #
+[![Build Status](https://travis-ci.org/bangordailynews/Docs-to-WordPress.svg?branch=master)](https://travis-ci.org/bangordailynews/Docs-to-WordPress)
+
 **Contributors:** wpdavis, anubisthejackle
 
 **Donate link:** http://wpdavis.com/
