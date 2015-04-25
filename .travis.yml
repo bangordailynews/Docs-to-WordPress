@@ -37,8 +37,6 @@ matrix:
       env: WP_VERSION=3.9
     - php: "5.5"
       env: WP_VERSION=3.8
-    - php: "5.5"
-      env: WP_VERSION=3.7
     - php: "5.4"
       env: WP_VERSION=master
     - php: "5.4"

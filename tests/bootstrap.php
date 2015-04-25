@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
 /**
  * Bootstrap the plugin unit testing environment.
  *
