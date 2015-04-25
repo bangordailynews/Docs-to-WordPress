@@ -76,6 +76,7 @@ matrix:
 
 # Clones WordPress and configures our testing environment.
 before_script:
+    - php composer.phar install --dev
     - export PLUGIN_SLUG=$(basename $(pwd))
     - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
     - cd ..
@@ -89,3 +90,6 @@ before_script:
     - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
 
 script: phpunit
+
+after_script:
+    - ./vendor/bin/test-reporter
