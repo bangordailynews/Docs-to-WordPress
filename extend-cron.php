@@ -3,7 +3,7 @@
 Plugin Name: Docs to WordPress extender - Run on Cron (every minute)
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.4-beta
+Version: 1.1
 */
 
 //First, allow the cron to run every minute

@@ -5,11 +5,11 @@
 
 **Tags:** docs,google,google docs,syndication
 
-**Requires at least:** 3.0
+**Requires at least:** 3.7
 
 **Tested up to:** 4.1.1
 
-**Stable tag:** 1.0-beta
+**Stable tag:** 1.1
 
 
 Easily move posts from Google Docs to WordPress
@@ -47,6 +47,9 @@ You will need to have a folder to draw the docs from and an optional folder to p
 First create the folder that you want to store unpublished docs in. This is your "Origin" folder. Next create the folder that you will move converted files to. This is the "Target" folder. If you're using Cron, you're going to want to write stories in a separate folder, and then move them to the Origin folder for publishing, when they're ready.
 
 ## Changelog ##
+
+### 1.1 ###
+Version bump. Removes anonymous functions, so it can be used as far back as PHP 5.2
 
 ### 1.0-beta ###
 Update to remove deprecated Google API and use Drive API v2

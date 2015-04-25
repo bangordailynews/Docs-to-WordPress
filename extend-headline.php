@@ -3,7 +3,7 @@
 Plugin Name: Docs to WordPress extender - Headline delimiter
 Author: William P. Davis, Bangor Daily News
 Author URI: http://wpdavis.com/
-Version: 0.4-beta
+Version: 1.1
 */
  
 add_filter( 'pre_docs_to_wp_insert', 'bdn_split_post' );

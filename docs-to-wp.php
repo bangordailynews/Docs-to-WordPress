@@ -5,7 +5,7 @@ Description: Use Google Docs to create content and move it into WordPress for pu
 Author: William P. Davis, Travis Weston, Bangor Daily News
 Author URI: http://dev.bangordailynews.com/
 Plugin URI: https://github.com/bangordailynews/Docs-to-WordPress
-Version: 1.0-beta
+Version: 1.1
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
