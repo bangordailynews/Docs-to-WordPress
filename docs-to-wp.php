@@ -75,6 +75,15 @@ class Docs_To_WP {
 		
 	}
 
+	public function setupNotice() {
+
+		if( get_option( 'docs_to_wp_client_id' ) && get_option( 'docs_to_wp_client_secret' ) )
+			return;
+	
+		echo '<div class="error"><p>Docs To WP Requires you to <a href="https://console.developers.google.com/project">Create a Google API Project</a> and enter the details <a href="' . admin_url( 'options-general.php?page=docs_to_wp' ) . '">in the options page</a>.</p></div>';
+	
+	}
+
 	/*
 		Cloned from get_user_by
 	*/
@@ -266,11 +275,7 @@ class Docs_To_WP {
 
 		do_action('pre_docs_to_wp_register_hooks');
 
-		add_action( 'admin_notices', function() {
-			if( !get_option( 'docs_to_wp_client_id' ) || !get_option( 'docs_to_wp_client_secret' ) ){
-				echo '<div class="error"><p>Docs To WP Requires you to <a href="https://console.developers.google.com/project">Create a Google API Project</a> and enter the details <a href="' . admin_url( 'options-general.php?page=docs_to_wp' ) . '">in the options page</a>.</p></div>';
-			}
-		});
+		add_action( 'admin_notices', array( $this, 'setupNotice' ) );
 		add_action( 'admin_menu', array( $this, 'registerMenu' ) );
 
 		do_action('post_docs_to_wp_register_hooks');
