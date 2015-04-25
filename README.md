@@ -1,5 +1,5 @@
 # Docs to WordPress #
-[![Build Status](https://travis-ci.org/bangordailynews/Docs-to-WordPress.svg?branch=master)](https://travis-ci.org/bangordailynews/Docs-to-WordPress)
+[![Build Status](https://travis-ci.org/bangordailynews/Docs-to-WordPress.svg?branch=master)](https://travis-ci.org/bangordailynews/Docs-to-WordPress) - [![Code Climate](https://codeclimate.com/github/bangordailynews/Docs-to-WordPress/badges/gpa.svg)](https://codeclimate.com/github/bangordailynews/Docs-to-WordPress)
 
 **Contributors:** wpdavis, anubisthejackle
 
