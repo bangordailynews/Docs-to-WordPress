@@ -28,11 +28,13 @@ class Docs_To_WP_Options_Ajax {
 
 }
 
-add_action('admin_init', function() {
+function docs_to_wp_init_ajax() {
 
 	if( !defined( 'DOING_AJAX' ) || !DOING_AJAX )
 		return;
 
 	$ajax = new Docs_To_WP_Options_Ajax();
 
-});
+}
+
+add_action('admin_init', 'docs_to_wp_init_ajax');
