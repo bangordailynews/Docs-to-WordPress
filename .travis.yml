@@ -73,6 +73,19 @@ matrix:
       env: WP_VERSION=3.8
     - php: "5.2"
       env: WP_VERSION=3.7
+  allow_failures:
+    - php: "nightly"
+      env: WP_VERSION=master
+    - php: "nightly"
+      env: WP_VERSION=4.1
+    - php: "nightly"
+      env: WP_VERSION=4.0
+    - php: "nightly"
+      env: WP_VERSION=3.9
+    - php: "nightly"
+      env: WP_VERSION=3.8
+    - php: "nightly"
+      env: WP_VERSION=3.7
 
 # Clones WordPress and configures our testing environment.
 before_script:
