@@ -1,6 +1,6 @@
 === Docs to WordPress ===
 Contributors: wpdavis, anubisthejackle
-Donate link: http://wpdavis.com/
+Donate link: http://dev.bangordailynews.com/
 Tags: docs,google,google docs,syndication
 Requires at least: 3.7
 Tested up to: 4.1.1
