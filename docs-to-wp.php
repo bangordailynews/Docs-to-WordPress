@@ -100,7 +100,7 @@ class Docs_To_WP {
 
 		return $user;
  
-	}
+	}	
 
 	private function _moveToDestination( $id ){
 		
@@ -263,6 +263,14 @@ class Docs_To_WP {
 	}
 
 	private function _auth() {
+
+		$response = $this->_auth->refresh( 
+							get_option( 'docs_to_wp_refresh_token' ), 
+							get_option( 'docs_to_wp_client_id' ), 
+							get_option( 'docs_to_wp_client_secret' ) 
+		);
+		
+		update_option( 'docs_to_wp_auth_token', $response->access_token );
 
 		$this->_drive->connect( array(
 			'access_token' => get_option( 'docs_to_wp_auth_token' ),
