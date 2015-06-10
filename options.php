@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', true);
 /*
 Docs To WP Options Page
 TO-DO:
