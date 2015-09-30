@@ -23,6 +23,8 @@ You can see more details at http://dev.bangordailynews.com/2011/06/16/marrying-g
 6. If you wish, activate the extender plugin that removes formatting from Google Docs and removes comments, placing them in a separate meta box
 7. To run the plugin, you will need to either activate the included Cron Extender or put code in a separate file and point a cron job to it.
 
+Tara Kerwin has made a helpful installation walkthrough video available at https://youtu.be/oFLjn2VOn-U
+
 = To run using WP CRON =
 Activate the cron extender.
 
