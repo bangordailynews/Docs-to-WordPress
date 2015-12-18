@@ -100,7 +100,7 @@ class Docs_To_WP {
 
 		return $user;
  
-	}	
+	}
 
 	private function _moveToDestination( $id ){
 		
@@ -117,7 +117,27 @@ class Docs_To_WP {
 	}
 
 	private function _cleanDoc( $raw ) {
+//PHP doesn't honor lazy matches very well, apparently, so add newlines
+		$raw = str_replace( '}', "}\r\n", $raw );
 
+		preg_match_all( '#.c(?P<digit>\d+){(.*?)font-weight:bold(.*?)}#', $raw, $boldmatches );
+		preg_match_all('#.c(?P<digit>\d+){(.*?)font-style:italic(.*?)}#', $raw, $italicmatches);
+
+		if( !empty( $boldmatches[ 'digit' ] ) ) {
+
+			foreach( $boldmatches[ 'digit' ] as $boldclass ) {
+				$raw = preg_replace( '#<span class="(.*?)c' . $boldclass . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $boldclass . '$2"><strong>$3</strong></span>', $raw );
+			}
+
+		}
+
+		if( !empty( $italicmatches[ 'digit' ] ) ) {
+
+			foreach( $italicmatches[ 'digit' ] as $italicclass ) {
+				$raw = preg_replace( '#<span class="(.*?)c' . $italicclass . '(.*?)">(.*?)</span>#s', '<span class="$1c' . $italicclass . '$2"><em>$3</em>', $raw );
+			}
+
+		}
 		$purifier = $this->_initPurifier();
 			
 		//New domDocument and xPath to get the content
@@ -263,14 +283,6 @@ class Docs_To_WP {
 	}
 
 	private function _auth() {
-
-		$response = $this->_auth->refresh( 
-							get_option( 'docs_to_wp_refresh_token' ), 
-							get_option( 'docs_to_wp_client_id' ), 
-							get_option( 'docs_to_wp_client_secret' ) 
-		);
-		
-		update_option( 'docs_to_wp_auth_token', $response->access_token );
 
 		$this->_drive->connect( array(
 			'access_token' => get_option( 'docs_to_wp_auth_token' ),
